@@ -7,6 +7,8 @@ import veiculo.Veiculo;
 
 public  record DadosCadastro(
         @NotBlank
+        String nome,
+        @NotBlank
         String dataEntrada,
 
         @NotBlank

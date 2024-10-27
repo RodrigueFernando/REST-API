@@ -1,20 +1,18 @@
 package controller;
 
-import conserto.Conserto;
-import conserto.ConsertoRepository;
-import conserto.DadosListagemConsertos;
+import conserto.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import conserto.DadosCadastro;
-
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "conserto")
@@ -45,6 +43,33 @@ public class ConsertoController {
         return repository.findAll().stream().map(DadosListagemConsertos::new).toList();
 
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getConsertoById(@PathVariable Long id) {
+
+        Optional<Conserto> medicoOptional = repository.findById(id);
+
+        if (medicoOptional.isPresent()) {
+            Conserto conserto = medicoOptional.get();
+            return ResponseEntity.ok(conserto);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizacaoConserto dados) {
+
+       Conserto conserto = repository.getReferenceById( dados.id() );
+      conserto.atualizarInformacoes(dados);
+
+
+    }
+
+
 
 }
 

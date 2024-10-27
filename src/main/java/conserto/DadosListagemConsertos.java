@@ -3,20 +3,22 @@ package conserto;
 import mecanico.Mecanico;
 import veiculo.Veiculo;
 
-public record DadosListagemConsertos(String dataEntrada,String dataSaida, String nome,String marca,String modelo) {
+public record DadosListagemConsertos(Long id,String dataEntrada,String dataSaida, String nome,String marca,String modelo) {
 
     // Construtor adicional que cria DadosListagemConsertos a partir de Conserto, Veiculo e Mecanico
     public DadosListagemConsertos(Conserto conserto, Veiculo veiculo, Mecanico mecanico) {
-        this(conserto.getDataEntrada(),
+        this(conserto.getId(),
+             conserto.getDataEntrada(),
              conserto.getDataSaida(),
-                mecanico.getNome(),
-                veiculo.getMarca(),
-                veiculo.getModelo()
+             mecanico.getNome(),
+             veiculo.getMarca(),
+             veiculo.getModelo()
         );
     }
 
     public DadosListagemConsertos(Conserto conserto) {
-        this(conserto.getDataEntrada(),
+        this(conserto.getId(),
+                conserto.getDataEntrada(),
                 conserto.getDataSaida(),
                 conserto.getMecanico().getNome(),
                 conserto.getVeiculo().getMarca(),

@@ -28,4 +28,6 @@ public class Dados {
         this.marca = String.valueOf(dados.veiculo());
         this.modelo = String.valueOf(dados.veiculo());
     }
+
+
 }
