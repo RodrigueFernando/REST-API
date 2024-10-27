@@ -1,0 +1,1 @@
+alter table CONSERTOS  add cor VARCHAR(20);

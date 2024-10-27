@@ -22,6 +22,7 @@ public class Conserto {
 
     private String dataEntrada;
     private String dataSaida;
+    private String cor;
 
     @Embedded
     private Mecanico mecanico;
@@ -33,6 +34,7 @@ public class Conserto {
     public Conserto(DadosCadastro dados) {
         this.dataEntrada = dados.dataEntrada();
         this.dataSaida = dados.dataSaida();
+        this.cor = dados.cor();
         this.veiculo = new Veiculo(dados.veiculo().getMarca(), dados.veiculo().getModelo(), dados.veiculo().getAno());
         this.mecanico = new Mecanico(dados.mecanico().getNome(), dados.mecanico().getAnosExperiencia());
     }
