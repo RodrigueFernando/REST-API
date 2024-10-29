@@ -20,7 +20,7 @@ public class Conserto {
     private String dataEntrada;
     private String dataSaida;
     private String cor;
-
+    private Boolean ativo;
 
     @Embedded
     private Mecanico mecanico;
@@ -30,12 +30,10 @@ public class Conserto {
 
     // Construtor que aceita um objeto de dados de cadastro
     public Conserto(DadosCadastro dados) {
-       // this.ativo = true;
-
+        this.ativo = true;
         this.dataEntrada = dados.dataEntrada();
         this.dataSaida = dados.dataSaida();
         this.cor = dados.cor();
-
         this.veiculo = new Veiculo(dados.veiculo().getMarca(), dados.veiculo().getModelo(), dados.veiculo().getAno());
         this.mecanico = new Mecanico(dados.mecanico().getNome(), dados.mecanico().getAnosExperiencia());
     }
@@ -53,6 +51,9 @@ public class Conserto {
 
     }
 
+    public void excluir() {
 
+        this.ativo = false;
+    }
 
 }

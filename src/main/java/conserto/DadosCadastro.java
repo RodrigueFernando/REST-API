@@ -6,7 +6,7 @@ import mecanico.Mecanico;
 import veiculo.Veiculo;
 
 public  record DadosCadastro(
-        @NotBlank
+
         String nome,
         @NotBlank
         String dataEntrada,
@@ -14,8 +14,6 @@ public  record DadosCadastro(
         @NotBlank
         String dataSaida ,
 
-        @NotBlank
-        String telefone,
 
         @NotBlank
         String cor,

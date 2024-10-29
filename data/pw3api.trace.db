@@ -1825,3 +1825,8 @@ select c1_0.id,c1_0.ano_experiencia_mecanico,c1_0.cor,c1_0.data_entrada,c1_0.dat
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
+2024-10-28 20:56:58.643115-03:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MEDICOS" not found; SQL statement:
+-- O problema é: como fica este campo nos registros já existentes?
+-- Vai ficar como null.-- Isso é um erro, deveria ser ativo ou não ativo.-- Vamos então fazer um comando SQL para trocar o campo para 1-- em todos os registros. Isto é, no momento da migration-- (criação do compo), todos os registros estarão "ativos":
+update medicos set ativo = 1 [42102-224]

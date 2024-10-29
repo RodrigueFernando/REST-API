@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 import java.util.List;
@@ -26,10 +27,18 @@ public class ConsertoController {
 
     @PostMapping
     @Transactional
-    public void cadastrar(@RequestBody  DadosCadastro dados) {
+    public ResponseEntity  cadastrar(@RequestBody @Valid DadosCadastro dados, UriComponentsBuilder uriBuilder) {
 
        // System.out.println(json);
-        repository.save(new Conserto(dados));
+        var conserto = new Conserto(dados);
+
+        repository.save(conserto);
+
+        // Gerar automaticamente a URL para o novo recurso criado:
+        var uri = uriBuilder.path("/consertos/{id}").buildAndExpand(conserto.getId()).toUri();
+
+        // Vamos aqui usar o DTO que criamos para o método atualizar:
+        return ResponseEntity.created(uri).body( new DadosDetalhamentoConseto(conserto) );
     }
 
     @GetMapping
@@ -40,7 +49,7 @@ public class ConsertoController {
 
     @GetMapping("algunsdados")
     public List<DadosListagemConsertos> listarAlgunsDados() {
-        return repository.findAll().stream().map(DadosListagemConsertos::new).toList();
+        return repository.findAllByAtivoTrue().stream().map(DadosListagemConsertos::new).toList();
 
     }
 
@@ -61,14 +70,25 @@ public class ConsertoController {
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizacaoConserto dados) {
+    public ResponseEntity<DadosDetalhamentoConseto> atualizar(@RequestBody @Valid DadosAtualizacaoConserto dados) {
 
        Conserto conserto = repository.getReferenceById( dados.id() );
       conserto.atualizarInformacoes(dados);
 
-
+       return ResponseEntity.ok( new DadosDetalhamentoConseto(conserto) );
     }
 
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id) {
+
+        Conserto conserto = repository.getReferenceById(id);
+
+       conserto.excluir();
+
+        return ResponseEntity.noContent().build();
+    }
 
 
 }
