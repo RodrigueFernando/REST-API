@@ -1,2 +1,4 @@
-package util.security;public class DadosTokenJWT {
+package util.security;
+
+public record DadosTokenJWT(String token) {
 }

@@ -25,7 +25,7 @@ import util.security.DadosTokenJWT;
 import util.security.PW3TokenService;
 
 @Configuration
-
+@EnableWebSecurity
 public class SecurityConfigurations {
 
     @Bean
